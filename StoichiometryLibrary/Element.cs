@@ -3,23 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace StoichiometryLibrary
 {
     internal class Element : IMolecularElement
     {
-        public ushort Multiplier => throw new NotImplementedException();
+        [JsonProperty("symbol")]  ///MIGHT BE WRONG, NOT SURE IF ELEMENT IS ACTUALLY HIDDEN ATM 
+        private string _symbol;
 
-        public string Symbol => throw new NotImplementedException();
+        [JsonProperty("name")]
+        private string _name;
 
-        public string Name => throw new NotImplementedException();
+        [JsonProperty("number")]
+        private ushort _atomicNumber;
 
-        public ushort AtomicNumber => throw new NotImplementedException();
+        [JsonProperty("atomic_mass")]
+        private double _atomicMass;
 
-        public double AtomicMass => throw new NotImplementedException();
+        [JsonProperty("period")]
+        private ushort _period;
 
-        public ushort Period => throw new NotImplementedException();
+        [JsonProperty("group")]
+        private ushort _group;
 
-        public ushort Group => throw new NotImplementedException();
+        public ushort Multiplier { get; } = 1;
+
+        public string Symbol => _symbol;
+        public string Name => _name;
+        public ushort AtomicNumber => _atomicNumber;
+        public double AtomicMass => _atomicMass;
+        public ushort Period => _period;
+        public ushort Group => _group;
     }
 }
