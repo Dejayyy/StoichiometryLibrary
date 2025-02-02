@@ -11,7 +11,7 @@ namespace StoichiometryLibrary
         string Symbol { get; }
         string Name { get; }
         ushort AtomicNumber { get; }
-        double atomicMass { get; }
+        double AtomicMass { get; }
         ushort Period { get; }
         ushort Group { get; }
     }
