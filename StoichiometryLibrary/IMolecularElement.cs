@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StoichiometryLibrary
 {
-    public interface IMolecularElement
+    public interface IMolecularElement : IElement
     {
+        ushort Multiplier { get; }
     }
 }

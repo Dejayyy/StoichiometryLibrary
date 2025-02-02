@@ -8,5 +8,6 @@ namespace StoichiometryLibrary
 {
     public class PeriodicTable
     {
+        public static IElement[]? Elements { get; }
     }
 }
