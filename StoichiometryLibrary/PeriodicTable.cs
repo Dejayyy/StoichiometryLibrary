@@ -2,25 +2,22 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace StoichiometryLibrary
 {
     public class PeriodicTable
     {
         [JsonProperty("elements")]
-        public static IElement[]? Elements { get; }
+        public IElement[]? Elements { get; private set; }
 
-        public  IElement[] LoadElements()
+        public void LoadElements()
         {
             try
             {
                 string jsonText = File.ReadAllText("PeriodicTableJSON.json");
                 var jsonObject = JObject.Parse(jsonText);
-                Element[]? elements = jsonObject["elements"]!.ToObject<Element[]>();
-                return elements!;
+                Elements = jsonObject["elements"]!.ToObject<Element[]>();
             }
             catch (Exception ex)
             {
