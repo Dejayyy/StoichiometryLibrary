@@ -68,7 +68,14 @@ namespace Stoichiometry
                 }
                 else
                 {
-                    Console.WriteLine($"\t{formula} has a mass of {molecule.CalcMass()}");
+                    Console.WriteLine($"\t{formula} has a mass of {molecule.CalcMass()}\n");
+
+                    foreach (var element in molecule.GetComposition())
+                    {
+                        Console.WriteLine($"\t\t{element.Symbol} ({element.Name})\t\t{element.AtomicMass} x {element.Multiplier} = {element.AtomicMass * element.Multiplier}");
+                    }
+
+                    Console.WriteLine();
                 }
             }
         }
