@@ -9,15 +9,22 @@ namespace StoichiometryLibrary
     public class PeriodicTable
     {
         [JsonProperty("elements")]
-        public IElement[]? Elements { get; private set; }
+        public static IElement[]? Elements { get; private set; }
 
-        public void LoadElements()
+        static PeriodicTable()
         {
             try
             {
                 string jsonText = File.ReadAllText("PeriodicTableJSON.json");
+
+                // parse
                 var jsonObject = JObject.Parse(jsonText);
-                Elements = jsonObject["elements"]!.ToObject<Element[]>();
+
+                // extract elements
+                var elementsArray = jsonObject["elements"]?.ToObject<List<Element>>();
+                
+                // convert and put into array
+                Elements = elementsArray?.ToArray();
             }
             catch (Exception ex)
             {

@@ -9,31 +9,41 @@ namespace StoichiometryLibrary
 {
     internal class Element : IMolecularElement
     {
-        [JsonProperty("symbol")]  ///MIGHT BE WRONG, NOT SURE IF ELEMENT IS ACTUALLY HIDDEN ATM 
-        private string _symbol;
+        [JsonProperty("symbol")]  /// BELIEVE ITS FIXED, ATTRIBUTES ARE PUBLIC INTERNALLY, BUT STILL HIDDEN TO THE CLIENT AS ITS INTERNAL
+        public string Symbol { get; private set; }
 
         [JsonProperty("name")]
-        private string _name;
+        public string Name { get; private set; }
 
         [JsonProperty("number")]
-        private ushort _atomicNumber;
+        public ushort AtomicNumber { get; private set; }
 
         [JsonProperty("atomic_mass")]
-        private double _atomicMass;
+        public double AtomicMass { get; private set; }
 
         [JsonProperty("period")]
-        private ushort _period;
+        public ushort Period { get; private set; }
 
         [JsonProperty("group")]
-        private ushort _group;
+        public ushort Group { get; private set; }
 
-        public ushort Multiplier { get; } = 1;
+        public ushort Multiplier { get; private set;  } = 1;
 
-        public string Symbol => _symbol;
-        public string Name => _name;
-        public ushort AtomicNumber => _atomicNumber;
-        public double AtomicMass => _atomicMass;
-        public ushort Period => _period;
-        public ushort Group => _group;
+        // Constructors - gets rid of null errors and useful if needed
+        public Element(string symbol, string name, ushort atomicNumber, double atomicMass, ushort period, ushort group)
+        {
+            Symbol = symbol;
+            Name = name;
+            AtomicNumber = atomicNumber;
+            AtomicMass = atomicMass;
+            Period = period;
+            Group = group;
+        }
+
+        // Handle Multipliers
+        public Element AddMultiplier(ushort multiplier)
+        {
+            return new Element(Symbol, Name, AtomicNumber, AtomicMass, Period, Group) { Multiplier = multiplier };
+        }
     }
 }
