@@ -7,10 +7,7 @@ namespace Stoichiometry
     {
         static void Main(string[] args)
         {
-            PeriodicTable table = new PeriodicTable();
-            table.LoadElements();
-
-            Console.WriteLine(table.Elements[1].Name);
+            Console.WriteLine(PeriodicTable.Elements[1].Name);
         }
     }
 }

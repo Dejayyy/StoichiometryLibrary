@@ -8,16 +8,16 @@ namespace StoichiometryLibrary
 {
     public class PeriodicTable
     {
-        [JsonProperty("elements")]
-        public IElement[]? Elements { get; private set; }
+        private static IElement[]? _elements;
+        public static IElement[] Elements => _elements ?? throw new InvalidOperationException("Elements not loaded");
 
-        public void LoadElements()
+        static PeriodicTable()
         {
             try
             {
                 string jsonText = File.ReadAllText("PeriodicTableJSON.json");
                 var jsonObject = JObject.Parse(jsonText);
-                Elements = jsonObject["elements"]!.ToObject<Element[]>();
+                _elements = jsonObject["elements"]!.ToObject<Element[]>();
             }
             catch (Exception ex)
             {
