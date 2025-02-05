@@ -27,7 +27,7 @@ namespace Stoichiometry
                     DisplayTable();
                     break;
                 case string argument when argument.StartsWith("/f:"):
-                    //ProcessFile(argument.Substring(3));     // remove /f:
+                    ProcessFile(argument.Substring(3));     // remove /f:
                     break;
                 default:
                     ProcessFormulas(args);
@@ -64,7 +64,7 @@ namespace Stoichiometry
 
                 if(!molecule.Valid)
                 {
-                    Console.WriteLine($"\t{formula} is NOT valid");
+                    Console.WriteLine($"\t{formula} is NOT valid\n");
                 }
                 else
                 {
@@ -78,6 +78,18 @@ namespace Stoichiometry
                     Console.WriteLine();
                 }
             }
+        }
+
+        static void ProcessFile(string path)
+        {
+            if (!System.IO.File.Exists(path))
+            {
+                Console.WriteLine($"{path} not found.");
+                return;
+            }
+
+            string[] formulas = System.IO.File.ReadAllLines(path);
+            ProcessFormulas(formulas);
         }
     }
 }
