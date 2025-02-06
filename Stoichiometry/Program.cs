@@ -1,4 +1,10 @@
-﻿using StoichiometryLibrary;
+﻿/**
+ * Program: Program.cs
+ * Author: Logan McCallum, Ayden Nicholson, William Mouhtouris
+ * Date: Feb 2nd, 2024
+ */
+
+using StoichiometryLibrary;
 using System;
 
 namespace Stoichiometry
@@ -7,17 +13,17 @@ namespace Stoichiometry
     {
         static void Main(string[] args)
         {
-            // Display Title
+            //Display Title
             Console.WriteLine("\nStoichiometry 1.0 - L. McCallum, W. Mouhtouris, A. Nicholson\n");
 
-            // Handle Arguments
+            //Handle Arguments
             if (args.Length == 0)
             {
                 Console.WriteLine("No arguments were provided. Use /? for usage info\n");
                 return;
             }
 
-            // Switch to handle different user arguments
+            //Switch to handle different user arguments
             switch (args[0])
             {
                 case "/?":
@@ -27,7 +33,7 @@ namespace Stoichiometry
                     DisplayTable();
                     break;
                 case string argument when argument.StartsWith("/f:"):
-                    ProcessFile(argument.Substring(3));     // remove /f:
+                    ProcessFile(argument.Substring(3));
                     break;
                 default:
                     ProcessFormulas(args);
