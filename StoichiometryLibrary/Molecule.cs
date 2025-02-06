@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * Program: Molecule.cs
+ * Author: Logan McCallum, Ayden Nicholson, William Mouhtouris
+ * Date: Feb 2nd, 2024
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,35 +15,35 @@ namespace StoichiometryLibrary
 {
     public class Molecule
     {
-        // Properties
+        //Properties
         public bool Valid { get; private set; }
         public string Formula { get; set; }
-        private int Position = 0;   // Position in the formula
+        private int Position = 0;   //Position in the formula
         private int SubPosition = 0;
 
-        // Default Constructor
+        //Default Constructor
         public Molecule()
         {
             Formula = "";
         }
 
-        // One-Arg Constructor
+        //One-Arg Constructor
         public Molecule(string formula)
         {
             Formula = formula;
             Valid = ValidateFormula(formula);
         }
 
-        // Method that returns a double that is the total mass of the molecule described by Formula, if valid
+        //Method that returns a double that is the total mass of the molecule described by Formula, if valid
         public double CalcMass()
         {
-            // Throw Exception if formula is not valid
+            //Throw Exception if formula is not valid
             if (!Valid) { throw new InvalidOperationException("Formula is Invalid."); }
 
             IMolecularElement[] composition = GetComposition();
             double total = 0.0;
 
-            // Total it up
+            //Total it up
             foreach (Element element in composition)
             {
                 total += element.AtomicMass * element.Multiplier;
@@ -46,39 +52,38 @@ namespace StoichiometryLibrary
             return total;
         }
 
-        // Method returning an array of IMolecularElement interfaces containing one item for each element found in Formula, if valid
+        //Method returning an array of IMolecularElement interfaces containing one item for each element found in Formula, if valid
         public IMolecularElement[] GetComposition()
         {
             Position = 0;
 
-            // Throw Exception if formula is not valid
+            //Throw Exception if formula is not valid
             if (!Valid) { throw new InvalidOperationException("Formula is Invalid."); }
 
-            // Need to hold both element & multiplier and then put into an array, using dictionary due to restrictions on setting multiplier
-            // (Better to just wait until end to build element with complete multiplier)
+
             Dictionary<string, int> elements = new Dictionary<string, int>();
             
 
-            // Loop through the formula
+            //Loop through the formula
             while (Position < Formula.Length)
             {
-                // Going to need bracket handling here
+                //Going to need bracket handling here
                 if (Formula[Position] == '(')
                 {
-                    // Get the starting and ending points of the scope
+                    //Get the starting and ending points of the scope
                     int start = Position + 1;
                     int end = Formula.IndexOf(')', start);
 
-                    // Get the subformula
+                    //Get the subformula
                     string subFormula = Formula.Substring(start, end - start);
                     Position = end + 1;
 
-                    // Check for multiplier to entire subformula
+                    //Check for multiplier to entire subformula
                     int multiplier = ParseMultiplier();
 
                     var subformulaElements = ParseSubFormula(subFormula);
 
-                    // Multiply subformula elements by multiplier
+                    //Multiply subformula elements by multiplier
                     foreach (var element in subformulaElements)
                     {
                         if (elements.ContainsKey(element.Key))
@@ -89,13 +94,13 @@ namespace StoichiometryLibrary
                 }
                 else
                 {
-                    // Parse the element
+                    //Parse the element
                     string element = ParseElement();
 
-                    // Check for a modifier
+                    //Check for a modifier
                     int multiplier = ParseMultiplier();
 
-                    // Check if element exists in the dictionary
+                    //Check if element exists in the dictionary
                     if (elements.ContainsKey(element))
                         elements[element] += multiplier;
                     else

@@ -41,6 +41,8 @@ namespace Stoichiometry
             }
         }
 
+
+        //Displaying the help board
         static void DisplayHelp()
         {
             Console.WriteLine("\tStoichiometry [/?] [formulas] [/t] [/f:filepath]\n");
@@ -51,6 +53,8 @@ namespace Stoichiometry
             Console.WriteLine("\tfilepath\tSpecifies a text file containing molecular formulas, one per line.");
         }
 
+
+        //Displays the table of chemical elements
         static void DisplayTable()
         {
             Console.WriteLine("\n  Atomic #  Symbol  Name                                 Mass  Period   Group");
@@ -62,6 +66,7 @@ namespace Stoichiometry
             }
         }
 
+        //Takes the molecular formula and displays if its valid, the mass, and composition.
         static void ProcessFormulas(string[] args)
         {
             foreach (string formula in args)
@@ -86,6 +91,7 @@ namespace Stoichiometry
             }
         }
 
+        //Processes the file
         static void ProcessFile(string path)
         {
             if (!System.IO.File.Exists(path))

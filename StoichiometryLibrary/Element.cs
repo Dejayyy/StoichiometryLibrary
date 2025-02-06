@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * Program: Element.cs
+ * Author: Logan McCallum, Ayden Nicholson, William Mouhtouris
+ * Date: Feb 2nd, 2024
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +13,10 @@ using Newtonsoft.Json;
 
 namespace StoichiometryLibrary
 {
+    //Represents a chemical element properties mapped to the JSON.
     internal class Element : IMolecularElement
     {
-        [JsonProperty("symbol")]  /// BELIEVE ITS FIXED, ATTRIBUTES ARE PUBLIC INTERNALLY, BUT STILL HIDDEN TO THE CLIENT AS ITS INTERNAL
+        [JsonProperty("symbol")]
         public string Symbol { get; private set; }
 
         [JsonProperty("name")]
@@ -29,7 +36,7 @@ namespace StoichiometryLibrary
 
         public ushort Multiplier { get; private set;  } = 1;
 
-        // Constructors - gets rid of null errors and useful if needed
+        //Constructors
         public Element(string symbol, string name, ushort atomicNumber, double atomicMass, ushort period, ushort group)
         {
             Symbol = symbol;
@@ -40,7 +47,7 @@ namespace StoichiometryLibrary
             Group = group;
         }
 
-        // Handle Multipliers
+        //Handle Multipliers
         public Element AddMultiplier(ushort multiplier)
         {
             return new Element(Symbol, Name, AtomicNumber, AtomicMass, Period, Group) { Multiplier = multiplier };

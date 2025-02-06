@@ -1,4 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿/**
+ * Program: PeriodicTable.cs
+ * Author: Logan McCallum, Ayden Nicholson, William Mouhtouris
+ * Date: Feb 2nd, 2024
+ */
+
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -17,13 +24,13 @@ namespace StoichiometryLibrary
             {
                 string jsonText = File.ReadAllText("PeriodicTableJSON.json");
 
-                // parse
+                //Parse
                 var jsonObject = JObject.Parse(jsonText);
 
-                // extract elements
+                //Extract elements
                 var elementsArray = jsonObject["elements"]?.ToObject<List<Element>>();
                 
-                // convert and put into array
+                //Convert and put into array
                 Elements = elementsArray?.ToArray();
             }
             catch (Exception ex)
