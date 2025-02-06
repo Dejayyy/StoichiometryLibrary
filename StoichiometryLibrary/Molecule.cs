@@ -108,36 +108,36 @@ namespace StoichiometryLibrary
                 }
             }
 
-            // Use a list for now (dynamic) then convert to an array
+            //Use a list for now (dynamic) then convert to an array
             List<IMolecularElement> composition = new List<IMolecularElement>();
 
-            // Add each element to the array
+            //Add each element to the array
             foreach (var element in elements)
             {
-                // Find element in PeriodicTable
+                //Find element in PeriodicTable
                 IElement elementData = PeriodicTable.Elements.FirstOrDefault(e => e.Symbol == element.Key);
 
-                // Turn elementData into an Element
+                //Turn elementData into an Element
                 Element newElement = (Element)elementData;
 
-                // Add the multiplier to it
+                //Add the multiplier to it
                 Element multiplierAdded = newElement.AddMultiplier((ushort)element.Value);
 
-                // Add it to the composition list
+                //Add it to the composition list
                 composition.Add(multiplierAdded);
             }
 
-            // Convert list to an array and return
+            //Convert list to an array and return
             return composition.ToArray();
         }
 
-        // Parsing a single element
+        //Parsing a single element
         private string ParseElement()
         {
             string el = Formula[Position].ToString();
             Position++;
 
-            // Loop until not a lowercase letter
+            //Loop until not a lowercase letter
             while (Position < Formula.Length && char.IsLower(Formula[Position]))
             {
                 el += Formula[Position];
@@ -147,13 +147,13 @@ namespace StoichiometryLibrary
             return el;
         }
 
-        // Override with two parameters (for handling subformulas)
+        //Override with two parameters (for handling subformulas)
         private string ParseElement(string formula)
         {
             string el = formula[SubPosition].ToString();
             SubPosition++;
 
-            // Loop until not a lowercase letter
+            //Loop until not a lowercase letter
             while (SubPosition < formula.Length && char.IsLower(formula[SubPosition]))
             {
                 el += formula[SubPosition];
@@ -163,29 +163,29 @@ namespace StoichiometryLibrary
             return el;
         }
 
-        // Parsing a multiplier (number)
+        //Parsing a multiplier (number)
         private int ParseMultiplier()
         {
             int number = 0;
 
-            // loop until no longer number
+            //Loop until no longer number
             while (Position < Formula.Length && char.IsDigit(Formula[Position]))
             {
-                // Moves prior digit up, puts current digit into 1s column - minus '0' to get around unicode
+                //Moves prior digit up, puts current digit into 1s column - minus '0' to get around unicode
                 number = number * 10 + (Formula[Position] - '0');
                 Position++;
             }
 
-            // if no number found, default modifier is 1 (since the element is present)
+            //If no number found, default modifier is 1 (since the element is present)
             return number == 0 ? 1 : number;
         }
 
-        // Parsing a multiplier (number), overriden for subformula handling (two params)
+        //Parsing a multiplier (number), overriden for subformula handling (two params)
         private int ParseMultiplier(string formula)
         {
             int number = 0;
 
-            // loop until no longer number
+            //Loop until no longer number
             while (SubPosition < formula.Length && char.IsDigit(formula[SubPosition]))
             {
                 // Moves prior digit up, puts current digit into 1s column - minus '0' to get around unicode
@@ -193,11 +193,11 @@ namespace StoichiometryLibrary
                 SubPosition++;
             }
 
-            // if no number found, default modifier is 1 (since the element is present)
+            //If no number found, default modifier is 1 (since the element is present)
             return number == 0 ? 1 : number;
         }
 
-        // Parse a subformula
+        //Parse a subformula
         private Dictionary<string, int> ParseSubFormula(string subformula)
         {
             SubPosition = 0;
@@ -219,23 +219,23 @@ namespace StoichiometryLibrary
             return elements;
         }
 
-        // Addition: Handles formula validation
+        //Addition: Handles formula validation
         private bool ValidateFormula(string formula)
         {
-            // First Rule
+            //First Rule
             if (string.IsNullOrWhiteSpace(formula)) return false;
 
-            // Second Rule
+            //Second Rule
             string regexPattern = @"^((?:[A-Z][a-z]?\d*|\([A-Z][a-z]?\d*(?:[A-Z][a-z]?\d*)*\)\d*)+)$";
             if (!Regex.IsMatch(formula, regexPattern)) return false;
 
-            // Third Rule
+            //Third Rule
             if (char.IsDigit(formula[0])) return false;
 
-            // Fourth Rule
+            //Fourth Rule
             int count = 0;
 
-            // Makes sure each opening bracket has a closing
+            //Makes sure each opening bracket has a closing
             foreach (char c in formula)
             {
                 if (c == '(') count++;
@@ -246,18 +246,18 @@ namespace StoichiometryLibrary
 
             if (count != 0) return false;
 
-            // Fifth Rule
+            //Fifth Rule
             for (int i = 0; i < formula.Length; i++)
             {
-                // if its a digit
+                //If its a digit
                 if (char.IsDigit(formula[i]))
                 {
-                    // make sure its a letter or closing bracket before it
+                    //Make sure its a letter or closing bracket before it
                     if (i == 0 || !(char.IsLetter(formula[i - 1]) || formula[i - 1] == ')')) return false;
                 }
             }
 
-            // If all pass, then return true
+            //If all pass, then return true
             return true;
         }
     }
